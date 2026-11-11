@@ -1,0 +1,6 @@
+.env
+secrets/
+nginx/certs/
+node_modules/
+backups/
+*.dump.gz

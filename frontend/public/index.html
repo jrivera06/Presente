@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checador</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 3rem auto; padding: 0 1rem; }
+    button { font-size: 1.1rem; padding: 0.8rem 2rem; margin: 0.5rem; cursor: pointer; }
+    #status { margin-top: 1.5rem; color: #333; }
+  </style>
+</head>
+<body>
+  <h1>Checador</h1>
+  <p>Registra tu entrada y salida de la jornada.</p>
+  <button id="in">Entrada</button>
+  <button id="out">Salida</button>
+  <div id="status">Inicia sesión con tu cuenta de Microsoft para usar el checador.</div>
+
+  <script type="module">
+    // Autenticación MSAL (Entra ID) pendiente de integración: la SPA debe
+    // adquirir un token Bearer para llamar a /api/*. Este stub muestra el flujo.
+    const status = document.getElementById('status');
+    async function clock(action) {
+      status.textContent = 'Enviando…';
+      try {
+        const res = await fetch('/api/clock', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, source: 'web' }),
+        });
+        const data = await res.json();
+        status.textContent = res.ok ? `Registrado: ${data.action}` : `Error: ${data.error ?? res.status}`;
+      } catch (e) {
+        status.textContent = `Error de red: ${e.message}`;
+      }
+    }
+    document.getElementById('in').onclick = () => clock('clock_in');
+    document.getElementById('out').onclick = () => clock('clock_out');
+  </script>
+</body>
+</html>

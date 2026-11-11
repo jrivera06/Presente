@@ -19,6 +19,9 @@ scripts/                    # pg_dump diario con retención + restore
 
 ## Puesta en marcha
 
+> **Guía completa para TI:** [docs/DESPLIEGUE.md](docs/DESPLIEGUE.md) — instalación en servidor propio,
+> provisionamiento automático con `scripts/provision.sh`, TLS, firewall y operación.
+
 ```bash
 cp .env.example .env                 # ajustar valores
 mkdir -p secrets nginx/certs
